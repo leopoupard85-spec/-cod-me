@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>ECO-DOME — Habitat intelligent</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta name="description" content="ECO-DOME - Habitat intelligent et durable. Une serre intelligente qui capte, stocke et redistribue naturellement l'énergie solaire pour améliorer le confort tout en réduisant la consommation énergétique.">
+<meta name="keywords" content="ECO-DOME, habitat durable, serre intelligente, énergie solaire, écologie, maison autonome, développement durable, innovation écologique">
+<meta name="author" content="ECO-DOME">
+<meta property="og:title" content="ECO-DOME - Habitat intelligent et durable">
+<meta property="og:description" content="Réchauffer, refroidir, respirer — une serre intelligente pour un confort durable.">
+<meta property="og:image" content="logo.png">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="ECO-DOME - Habitat intelligent et durable">
+<meta name="twitter:description" content="Réchauffer, refroidir, respirer — une serre intelligente pour un confort durable.">
+<meta name="twitter:image" content="logo.png">
+<link rel="icon" type="image/png" href="logo.png">
+
+
+<style>
+:root{
+--hot:#ff6a3d;
+--cold:#5ad1ff;
+--green:#2cff9a;
+--dark1:#050b14;
+--dark2:#0c243a;
+--glass:rgba(255,255,255,0.08);
+}
+
+*{margin:0;padding:0;box-sizing:border-box;font-family:"Segoe UI",Arial,sans-serif}
+
+body{
+background:
+radial-gradient(circle at 20% 20%,rgba(44,255,154,0.15),transparent 40%),
+radial-gradient(circle at 80% 30%,rgba(90,209,255,0.15),transparent 40%),
+linear-gradient(135deg,var(--dark1),var(--dark2));
+color:white;
+overflow-x:hidden;
+}
+
+/* LUMIÈRES FLOTTANTES */
+.floating-lights{
+position:fixed;
+inset:0;
+pointer-events:none;
+background:
+radial-gradient(circle at 30% 40%,rgba(44,255,154,.15),transparent 40%),
+radial-gradient(circle at 70% 60%,rgba(90,209,255,.12),transparent 45%);
+animation:floatBg 18s ease-in-out infinite alternate;
+z-index:0;
+}
+@keyframes floatBg{
+from{transform:translateY(0)}
+to{transform:translateY(-90px)}
+}
+
+/* HEADER */
+header{
+position:fixed;
+top:0;width:100%;
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:20px 70px;
+background:rgba(0,0,0,0.35);
+backdrop-filter:blur(14px);
+transition:.5s;
+z-index:100;
+}
+header.scrolled{
+background:rgba(0,0,0,.55);
+padding:14px 60px;
+}
+header img{height:90px}
+nav a{
+margin-left:30px;
+color:white;
+text-decoration:none;
+opacity:.8;
+transition:.3s;
+}
+nav a:hover{opacity:1;color:var(--green)}
+
+/* HERO */
+.hero{
+min-height:100vh;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+text-align:center;
+padding:160px 20px 80px;
+position:relative;
+z-index:1;
+transition:.2s ease;
+}
+
+/* TITRE */
+.hero h1{
+font-size:82px;
+margin-bottom:25px;
+letter-spacing:6px;
+background:linear-gradient(120deg,var(--green),var(--cold));
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+text-shadow:0 0 40px rgba(90,209,255,0.35);
+}
+
+/* SLOGAN */
+.animated-text span{
+display:inline-block;
+opacity:0;
+transform:translateY(20px);
+animation:wordAppear .8s ease forwards;
+}
+.animated-text span:nth-child(1){animation-delay:.3s;color:var(--hot)}
+.animated-text span:nth-child(2){animation-delay:.6s;color:var(--cold)}
+.animated-text span:nth-child(3){animation-delay:.9s;color:var(--green)}
+
+@keyframes wordAppear{
+to{opacity:1;transform:translateY(0)}
+}
+
+.slogan{
+font-size:22px;
+max-width:900px;
+line-height:1.8;
+}
+
+/* BUTTON */
+.hero button{
+margin-top:60px;
+padding:20px 70px;
+font-size:20px;
+font-weight:600;
+border:none;
+border-radius:60px;
+cursor:pointer;
+color:#001;
+background:linear-gradient(120deg,var(--green),var(--cold),var(--green));
+background-size:200% 200%;
+animation:gradientMove 4s ease infinite;
+box-shadow:0 0 25px rgba(44,255,154,0.6),0 0 60px rgba(90,209,255,0.4);
+transition:.4s ease;
+position:relative;
+overflow:hidden;
+}
+.hero button::after{
+content:"➜";
+position:absolute;
+right:32px;
+top:50%;
+transform:translateY(-50%);
+font-size:22px;
+}
+.hero button:hover{
+transform:scale(1.18);
+box-shadow:0 0 40px rgba(44,255,154,0.9),0 0 120px rgba(90,209,255,0.8);
+}
+
+@keyframes gradientMove{
+0%{background-position:0% 50%}
+50%{background-position:100% 50%}
+100%{background-position:0% 50%}
+}
+
+/* SECTIONS */
+section{
+padding:130px 12%;
+opacity:0;
+transform:translateY(80px) scale(.96);
+transition:1.2s cubic-bezier(.19,1,.22,1);
+position:relative;
+z-index:1;
+}
+section.visible{
+opacity:1;
+transform:translateY(0) scale(1);
+}
+section h2{font-size:50px;margin-bottom:35px}
+section p{
+font-size:19px;
+line-height:2;
+max-width:1050px;
+opacity:.9;
+}
+
+/* CARDS */
+.cards{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+gap:40px;
+margin-top:70px;
+}
+.card{
+background:var(--glass);
+padding:45px;
+border-radius:28px;
+text-align:center;
+transition:.5s;
+position:relative;
+overflow:hidden;
+}
+.card::before{
+content:"";
+position:absolute;
+inset:-1px;
+background:linear-gradient(120deg,transparent,var(--green),transparent);
+opacity:0;
+transition:.5s;
+}
+.card:hover::before{opacity:.35}
+.card:hover{
+transform:translateY(-18px) scale(1.05);
+box-shadow:0 0 45px rgba(44,255,154,0.4);
+}
+.card h3{color:var(--green);margin-bottom:18px}
+
+/* ICONS */
+.icon{font-size:42px;margin-bottom:20px}
+.icon.recycle{animation:spin 6s linear infinite}
+.icon.solar{animation:pulse 2.5s ease-in-out infinite}
+.icon.water{animation:drop 1.8s ease-in-out infinite}
+
+@keyframes spin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+@keyframes pulse{0%{transform:scale(1)}50%{transform:scale(1.15)}100%{transform:scale(1)}}
+@keyframes drop{0%{transform:translateY(0)}50%{transform:translateY(8px)}100%{transform:translateY(0)}}
+
+/* FOOTER */
+footer{padding:60px;text-align:center;opacity:.6}
+
+/* FLOATING LIGHTS */
+.floating-lights{
+position:fixed;
+inset:0;
+pointer-events:none;
+z-index:0;
+}
+
+/* MOBILE */
+@media(max-width:900px){
+header{padding:20px}
+.hero h1{font-size:48px}
+section h2{font-size:36px}
+}
+</style>
+</head>
+
+<body>
+
+<div class="floating-lights"></div>
+
+<header>
+<img src="logo.png" alt="ECO-DOME logo">
+<nav>
+<a href="#probleme">Problème</a>
+<a href="#solution">Solution</a>
+<a href="#fonctionnement">Fonctionnement</a>
+<a href="#ecologie">Écologie</a>
+<a href="#cycle">Cycle</a>
+</nav>
+</header>
+
+<section class="hero visible">
+<h1>ECO-DOME</h1>
+
+<p class="slogan animated-text">
+<span>Réchauffer</span>, <span>refroidir</span>, <span>respirer</span> — une serre intelligente pour un confort durable
+</p>
+
+<button onclick="document.getElementById('probleme').scrollIntoView({behavior:'smooth'})">
+Explorer le projet
+</button>
+</section>
+
+<section id="probleme">
+<h2>Le problème de l’habitat moderne</h2>
+<p>
+L’habitat moderne repose majoritairement sur des systèmes de chauffage et de climatisation très énergivores.
+Ils dépendent fortement des énergies fossiles et ignorent souvent les conditions naturelles du climat.
+<br><br>
+Cela entraîne une consommation excessive d’énergie, des coûts élevés et une dégradation du confort de vie.
+La qualité de l’air intérieur est également impactée, ce qui peut avoir des conséquences sur la santé.
+</p>
+</section>
+
+<section id="solution">
+<h2>La solution ECO-DOME</h2>
+<p>
+ECO-DOME est une serre intelligente qui enveloppe l’habitat afin de créer une zone climatique intermédiaire.
+Elle permet de capter, stocker et redistribuer naturellement l’énergie solaire.
+<br><br>
+Le logement devient plus autonome, mieux isolé et beaucoup moins dépendant des systèmes énergétiques traditionnels.
+</p>
+</section>
+
+<section id="fonctionnement">
+<h2>Comment fonctionne ECO-DOME</h2>
+<p>
+Des capteurs analysent en temps réel la température, l’humidité et la lumière.
+Le système ajuste automatiquement la ventilation et le stockage thermique.
+<br><br>
+Cette gestion intelligente permet d’optimiser le confort tout en réduisant la consommation énergétique.
+</p>
+</section>
+
+<section id="ecologie">
+<h2>Écologie & Ressources durables</h2>
+
+<p>
+ECO-DOME utilise des matériaux durables et des technologies propres pour réduire son impact environnemental global.
+L’objectif est de construire un habitat respectueux des ressources naturelles.
+</p>
+
+<div class="cards">
+
+<div class="card">
+<div class="icon recycle">♻️</div>
+<h3>Verre recyclé</h3>
+<p>
+La structure utilise du verre recyclé haute performance pour limiter les déchets et optimiser la lumière naturelle.
+</p>
+</div>
+
+<div class="card">
+<div class="icon solar">☀️</div>
+<h3>Panneaux solaires</h3>
+<p>
+Ils produisent une énergie renouvelable qui alimente une partie du logement et des systèmes intelligents.
+</p>
+</div>
+
+<div class="card">
+<div class="icon water">💧</div>
+<h3>Récupération d’eau</h3>
+<p>
+L’eau de pluie est filtrée et réutilisée pour l’arrosage et la régulation thermique naturelle.
+</p>
+</div>
+
+</div>
+</section>
+
+<section id="cycle">
+<h2>Le cycle de fonctionnement d’ECO-DOME</h2>
+<p>
+ECO-DOME fonctionne comme un écosystème autonome.
+Le jour, il capte l’énergie solaire et stocke la chaleur.
+La nuit, cette chaleur est progressivement restituée.
+<br><br>
+En été, la ventilation naturelle et l’évaporation de l’eau permettent de rafraîchir l’air.
+Les plantes jouent aussi un rôle essentiel dans la purification et l’équilibre climatique.
+</p>
+</section>
+
+<footer>
+© 2026 — ECO-DOME | Habitat durable et intelligent
+</footer>
+
+<script>
+const sections=document.querySelectorAll("section");
+const observer=new IntersectionObserver(entries=>{
+entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add("visible")});
+},{threshold:0.2});
+sections.forEach(s=>observer.observe(s));
+
+window.addEventListener("scroll",()=>{
+document.querySelector("header")
+.classList.toggle("scrolled",window.scrollY>80);
+});
+
+document.addEventListener("mousemove",e=>{
+const hero=document.querySelector(".hero");
+const x=(e.clientX/window.innerWidth-.5)*18;
+const y=(e.clientY/window.innerHeight-.5)*18;
+hero.style.transform=`translate(${x}px,${y}px)`;
+});
+</script>
+
+
+<script type="application/ld+json">
+{
+ "@context":"https://schema.org",
+ "@type":"Organization",
+ "name":"ECO-DOME",
+ "description":"Habitat intelligent et durable",
+ "logo":"logo.png"
+}
+</script>
+
+</body>
+</html>
